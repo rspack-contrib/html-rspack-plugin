@@ -14,35 +14,34 @@
   <div>
     <img width="100" height="100" title="Webpack Plugin" src="http://michael-ciniawsky.github.io/postcss-load-plugins/logo.svg">
   </div>
-  <h1>HTML Webpack Plugin</h1>
+  <h1>HTML Rspack Plugin</h1>
   <p>Plugin that simplifies creation of HTML files to serve your bundles</p>
 </div>
 
+<h2 align="center">=== Notice ===</h2>
+
+This plugin is forked from [jantimon/html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
+
+The function of this plugin is basically the same as [jantimon/html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin). And this plugin can be used with both Rspack and Webpack 5.
+
+Change list:
+
+- Add `@rspack/core` as an optional peer dependency
+- Inline `@types/html-minifier-terser` package
+- Remove `pretty-error` dependency
+
 <h2 align="center">Install</h2>
 
-<h3>Webpack 5</h3>
-
 ```bash
-  npm i --save-dev html-webpack-plugin
+  npm i --save-dev html-rspack-plugin
 ```
 
 ```bash
-  yarn add --dev html-webpack-plugin
+  yarn add --dev html-rspack-plugin
 ```
 
 
-<h3>Webpack 4</h3>
-
-```bash
-  npm i --save-dev html-webpack-plugin@4
-```
-
-```bash
-  yarn add --dev html-webpack-plugin@4
-```
-
-
-This is a [webpack](http://webpack.js.org/) plugin that simplifies creation of HTML files to serve your `webpack` bundles. This is especially useful for `webpack` bundles that include a hash in the filename which changes every compilation. You can either let the plugin generate an HTML file for you, supply
+This is a [Rspack](https://github.com/web-infra-dev/rspack) / [webpack](http://webpack.js.org/) plugin that simplifies creation of HTML files to serve your `Rspack` bundles. This is especially useful for `Rspack` bundles that include a hash in the filename which changes every compilation. You can either let the plugin generate an HTML file for you, supply
 your own template using `lodash` templates or use your own loader.
 
 <h2 align="center">Sponsors</h2>
