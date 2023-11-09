@@ -1,8 +1,8 @@
 {
-  "name": "html-webpack-plugin",
+  "name": "html-rspack-plugin",
   "version": "5.5.3",
   "license": "MIT",
-  "description": "Simplifies creation of HTML files to serve your webpack bundles",
+  "description": "Simplifies creation of HTML files to serve your Rspack bundles",
   "author": "Jan Nicklas <j.nicklas@me.com> (https://github.com/jantimon)",
   "main": "index.js",
   "types": "typings.d.ts",
