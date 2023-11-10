@@ -29,6 +29,7 @@ Change list:
 - Add `@rspack/core` as an optional peer dependency
 - Inline `@types/html-minifier-terser` package
 - Remove `pretty-error` dependency
+- Bump `html-minifier-terser` from v6 to v7
 
 <h2 align="center">Install</h2>
 
