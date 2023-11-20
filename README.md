@@ -30,6 +30,7 @@ Change list:
 - Inline `@types/html-minifier-terser` package
 - Remove `pretty-error` dependency
 - Bump `html-minifier-terser` from v6 to v7
+- Prebundle `html-minifier-terser`
 
 <h2 align="center">Install</h2>
 

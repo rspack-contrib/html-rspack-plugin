@@ -1100,7 +1100,7 @@ function hookIntoCompiler (compiler, options, plugin) {
       return html;
     }
     try {
-      return require('html-minifier-terser').minify(html, options.minify);
+      return require('./compiled/html-minifier-terser/index.js').minify(html, options.minify);
     } catch (e) {
       const isParseError = String(e.message).indexOf('Parse Error') === 0;
       if (isParseError) {
