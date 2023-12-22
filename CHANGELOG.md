@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.6.0](https://github.com/jantimon/html-webpack-plugin/compare/v5.5.4...v5.6.0) (2023-12-19)
+
+
+### Features
+
+* add `@rspack/core` as an optional peer dependency ([#1829](https://github.com/jantimon/html-webpack-plugin/issues/1829)) ([56ff3ae](https://github.com/jantimon/html-webpack-plugin/commit/56ff3aeaf17a592bf2cfb25219cfdf5aad6cc47d))
+* Added support `type=systemjs-module` via the `scriptLoading` option ([#1822](https://github.com/jantimon/html-webpack-plugin/issues/1822)) ([7effc30](https://github.com/jantimon/html-webpack-plugin/commit/7effc30df89a6553a20bf7915d97daa067bb4173))
+
+
+### Bug Fixes
+
+* memory leak ([#1836](https://github.com/jantimon/html-webpack-plugin/issues/1836)) ([c79f2cf](https://github.com/jantimon/html-webpack-plugin/commit/c79f2cfdb3aaa6f1dbd87b64c7d13bc9ab21c59f))
+
+### [5.5.4](https://github.com/jantimon/html-webpack-plugin/compare/v5.5.3...v5.5.4) (2023-12-06)
+
+
+### Bug Fixes
+
+* avoid have undefined `type` for script tags ([#1809](https://github.com/jantimon/html-webpack-plugin/issues/1809)) ([9959484](https://github.com/jantimon/html-webpack-plugin/commit/9959484f5337872f5af2a2f738228f5348a93901))
+* reemit assets from loaders ([#1811](https://github.com/jantimon/html-webpack-plugin/issues/1811)) ([a214736](https://github.com/jantimon/html-webpack-plugin/commit/a21473675c81dc4ac2ec8112741cbd52a2756dcc))
+* reemit favicon in serve/watch mode ([#1804](https://github.com/jantimon/html-webpack-plugin/issues/1804)) ([57c5a4e](https://github.com/jantimon/html-webpack-plugin/commit/57c5a4ebcfc4008686ae233f0c94434757c02329))
+
 ### [5.5.3](https://github.com/jantimon/html-webpack-plugin/compare/v5.5.2...v5.5.3) (2023-06-10)
 
 

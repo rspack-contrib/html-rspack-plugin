@@ -302,7 +302,7 @@ declare namespace HtmlWebpackPlugin {
      *
      * @default 'defer'
      */
-    scriptLoading?: "blocking" | "defer" | "module";
+    scriptLoading?: "blocking" | "defer" | "module" | "systemjs-module";
     /**
      * Inject meta tags
      */
@@ -347,7 +347,7 @@ declare namespace HtmlWebpackPlugin {
     templateParameters?:
       | false // Pass an empty object to the template function
       | ((
-          compilation: any,
+          compilation: Compilation,
           assets: {
             publicPath: string;
             js: Array<string>;
@@ -390,7 +390,7 @@ declare namespace HtmlWebpackPlugin {
    * Please keep in mind that the `templateParameter` options allows to change them
    */
   interface TemplateParameter {
-    compilation: any;
+    compilation: Compilation;
     htmlWebpackPlugin: {
       tags: {
         headTags: HtmlTagObject[];
