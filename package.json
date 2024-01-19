@@ -53,6 +53,18 @@
     "lodash": "^4.17.21",
     "tapable": "^2.0.0"
   },
+  "peerDependencies": {
+    "@rspack/core": "0.x || 1.x",
+    "webpack": "^5.20.0"
+  },
+  "peerDependenciesMeta": {
+    "@rspack/core": {
+      "optional": true
+    },
+    "webpack": {
+      "optional": true
+    }
+  },
   "keywords": [
     "rspack",
     "plugin",
