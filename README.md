@@ -26,7 +26,7 @@ The function of this plugin is basically the same as [jantimon/html-webpack-plug
 
 Change list:
 
-- Add `@rspack/core` as an optional peer dependency
+- Import type from `@rspack/core`
 - Inline `@types/html-minifier-terser` package
 - Remove `pretty-error` dependency
 - Bump `html-minifier-terser` from v6 to v7
