@@ -1,4 +1,4 @@
-import { AsyncSeriesWaterfallHook } from "tapable";
+import { AsyncSeriesWaterfallHook } from "./compiled/tapable";
 import { Compiler, Compilation } from "@rspack/core";
 
 // Type definitions for html-minifier-terser 6.1

@@ -5,8 +5,8 @@ const promisify = require('util').promisify;
 
 const vm = require('vm');
 const fs = require('fs');
-const _ = require('lodash');
 const path = require('path');
+const uniq = require('./compiled/lodash.uniq');
 const { CachedChildCompilation } = require('./lib/cached-child-compiler');
 
 const { createHtmlTagObject, htmlTagObjectToString, HtmlTagArray } = require('./lib/html-tags');
@@ -735,7 +735,7 @@ class HtmlWebpackPlugin {
    * @private
    */
   getAssetFiles (assets) {
-    const files = _.uniq(Object.keys(assets).filter(assetType => assetType !== 'chunks' && assets[assetType]).reduce((files, assetType) => files.concat(assets[assetType]), []));
+    const files = uniq(Object.keys(assets).filter(assetType => assetType !== 'chunks' && assets[assetType]).reduce((files, assetType) => files.concat(assets[assetType]), []));
     files.sort();
     return files;
   }
@@ -1013,7 +1013,7 @@ class HtmlWebpackPlugin {
       : childCompilerPlugin.getCompilationEntryResult(this.options.template);
 
     if ('error' in templateResult) {
-      compilation.errors.push(prettyError(templateResult.error, compiler.context).toString());
+      compilation.errors.push(prettyError(templateResult.error).toString());
     }
 
     // If the child compilation was not executed during a previous main compile run
@@ -1084,7 +1084,7 @@ class HtmlWebpackPlugin {
     const templateEvaluationPromise = Promise.resolve()
       .then(() => {
         if ('error' in templateResult) {
-          return this.options.showErrors ? prettyError(templateResult.error, compiler.context).toHtml() : 'ERROR';
+          return this.options.showErrors ? prettyError(templateResult.error).toHtml() : 'ERROR';
         }
 
         // Allow to use a custom function / string instead
@@ -1133,8 +1133,8 @@ class HtmlWebpackPlugin {
       .catch(err => {
         // In case anything went wrong the promise is resolved
         // with the error message and an error is logged
-        compilation.errors.push(prettyError(err, compiler.context).toString());
-        return this.options.showErrors ? prettyError(err, compiler.context).toHtml() : 'ERROR';
+        compilation.errors.push(prettyError(err).toString());
+        return this.options.showErrors ? prettyError(err).toHtml() : 'ERROR';
       })
       .then(html => {
         const filename = outputName.replace(/\[templatehash([^\]]*)\]/g, require('util').deprecate(
