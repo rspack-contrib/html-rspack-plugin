@@ -29,9 +29,11 @@ Change list:
 - Import type from `@rspack/core`
 - Inline `@types/html-minifier-terser` package
 - Bump `html-minifier-terser` from v6 to v7
+- Replace `lodash` with `lodash.template` / `lodash.uniq`
 - Remove `pretty-error` dependency
 - Remove `webpack` peer dependency
-- Prebundle `html-minifier-terser`
+- Remove eval `lodash` from template code
+- Prebundle all dependencies
 
 <h2 align="center">Install</h2>
 
