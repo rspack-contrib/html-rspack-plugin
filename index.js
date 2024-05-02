@@ -6,7 +6,7 @@ const promisify = require('util').promisify;
 const vm = require('vm');
 const fs = require('fs');
 const path = require('path');
-const uniq = require('./compiled/lodash.uniq');
+const _ = require('./compiled/lodash');
 const { CachedChildCompilation } = require('./lib/cached-child-compiler');
 
 const { createHtmlTagObject, htmlTagObjectToString, HtmlTagArray } = require('./lib/html-tags');
@@ -735,7 +735,7 @@ class HtmlWebpackPlugin {
    * @private
    */
   getAssetFiles (assets) {
-    const files = uniq(Object.keys(assets).filter(assetType => assetType !== 'chunks' && assets[assetType]).reduce((files, assetType) => files.concat(assets[assetType]), []));
+    const files = _.uniq(Object.keys(assets).filter(assetType => assetType !== 'chunks' && assets[assetType]).reduce((files, assetType) => files.concat(assets[assetType]), []));
     files.sort();
     return files;
   }

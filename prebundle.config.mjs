@@ -8,11 +8,7 @@ export default {
       ignoreDts: true,
     },
     {
-      name: "lodash.template",
-      ignoreDts: true,
-    },
-    {
-      name: "lodash.uniq",
+      name: "lodash",
       ignoreDts: true,
     },
   ],
