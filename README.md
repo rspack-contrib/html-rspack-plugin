@@ -32,6 +32,8 @@ Change list:
 - Remove `pretty-error` dependency
 - Remove `webpack` peer dependency
 - Prebundle all dependencies
+- Performance improvements for Rspack:
+  - Reuse `compilation.entrypoints`
 
 <h2 align="center">Install</h2>
 

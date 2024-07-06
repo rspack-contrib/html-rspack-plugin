@@ -348,7 +348,7 @@ class HtmlWebpackPlugin {
    * @param {string[]} entryNames
    * @returns {AssetsInformationByGroups}
    */
-  getAssetsInformationByGroups (compilation, outputName, entryNames) {
+  getAssetsInformationByGroups (compilation, outputName, entryNames, entrypoints) {
     /** The public path used inside the html file */
     const publicPath = this.getPublicPath(compilation, outputName, this.options.publicPath);
     /**
@@ -379,7 +379,7 @@ class HtmlWebpackPlugin {
     for (let i = 0; i < entryNames.length; i++) {
       const entryName = entryNames[i];
       /** entryPointUnfilteredFiles - also includes hot module update files */
-      const entryPointUnfilteredFiles = compilation.entrypoints.get(entryName).getFiles();
+      const entryPointUnfilteredFiles = entrypoints.get(entryName).getFiles();
       const entryPointFiles = entryPointUnfilteredFiles.filter((chunkFile) => {
         const asset = compilation.getAsset(chunkFile);
 
@@ -1005,7 +1005,8 @@ class HtmlWebpackPlugin {
     callback
   ) {
     // Get all entry point names for this html file
-    const entryNames = Array.from(compilation.entrypoints.keys());
+    const { entrypoints } = compilation;
+    const entryNames = Array.from(entrypoints.keys());
     const filteredEntryNames = this.filterEntryChunks(entryNames, this.options.chunks, this.options.excludeChunks);
     const sortedEntryNames = this.sortEntryChunks(filteredEntryNames, this.options.chunksSortMode, compilation);
     const templateResult = this.options.templateContent
@@ -1020,7 +1021,7 @@ class HtmlWebpackPlugin {
     // it is a cached result
     const isCompilationCached = templateResult.mainCompilationHash !== compilation.hash;
     /** Generated file paths from the entry point names */
-    const assetsInformationByGroups = this.getAssetsInformationByGroups(compilation, outputName, sortedEntryNames);
+    const assetsInformationByGroups = this.getAssetsInformationByGroups(compilation, outputName, sortedEntryNames, entrypoints);
     // If the template and the assets did not change we don't have to emit the html
     const newAssetJson = JSON.stringify(this.getAssetFiles(assetsInformationByGroups));
 
