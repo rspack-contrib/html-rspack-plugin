@@ -22,7 +22,7 @@ const getHtmlWebpackPluginHooks = require('./lib/hooks.js').getHtmlWebpackPlugin
 /** @typedef {ReturnType<Compiler["getInfrastructureLogger"]>} Logger */
 /** @typedef {import("webpack/lib/Compilation.js")} Compilation */
 /** @typedef {Array<{ name: string, source: import('webpack').sources.Source, info?: import('webpack').AssetInfo }>} PreviousEmittedAssets */
-/** @typedef {{ publicPath: string, js: Array<string>, css: Array<string>, manifest?: string, favicon?: string }} AssetsInformationByGroups */
+/** @typedef {{ publicPath: string, js: Array<string>, css: Array<string>, favicon?: string }} AssetsInformationByGroups */
 
 class HtmlWebpackPlugin {
   /**
@@ -361,16 +361,9 @@ class HtmlWebpackPlugin {
       js: [],
       // Will contain all css files
       css: [],
-      // Will contain the html5 appcache manifest files if it exists
-      manifest: Object.keys(compilation.assets).find(assetFile => path.extname(assetFile) === '.appcache'),
       // Favicon
       favicon: undefined
     };
-
-    // Append a hash for cache busting
-    if (this.options.hash && assets.manifest) {
-      assets.manifest = this.appendHash(assets.manifest, /** @type {string} */ (compilation.hash));
-    }
 
     // Extract paths to .js, .mjs and .css files from the current compilation
     const entryPointPublicPathMap = {};
@@ -670,17 +663,6 @@ class HtmlWebpackPlugin {
 
         // Append assets to head element
         html = html.replace(headRegExp, match => head.join('') + match);
-      }
-
-      // Inject manifest into the opening html tag
-      if (assetsInformationByGroups.manifest) {
-        html = html.replace(/(<html[^>]*)(>)/i, (match, start, end) => {
-          // Append the manifest only if no manifest was specified
-          if (/\smanifest\s*=/.test(match)) {
-            return match;
-          }
-          return start + ' manifest="' + assetsInformationByGroups.manifest + '"' + end;
-        });
       }
     }
 

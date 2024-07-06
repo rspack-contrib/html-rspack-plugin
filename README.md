@@ -33,6 +33,7 @@ Change list:
 - Remove `webpack` peer dependency
 - Prebundle all dependencies
 - Performance improvements for Rspack:
+  - Removed support for HTML5 Application caches (it has been deprecated)
   - Reuse `compilation.entrypoints`
 
 <h2 align="center">Install</h2>
@@ -214,7 +215,7 @@ once in your plugins array
 
 If the default generated HTML doesn't meet your needs you can supply
 your own template. The easiest way is to use the `template` option and pass a custom HTML file.
-The html-webpack-plugin will automatically inject all necessary CSS, JS, manifest
+The html-webpack-plugin will automatically inject all necessary CSS, JS
 and favicon files into the markup.
 
 Details of other template loaders are [documented here](https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md).
@@ -289,7 +290,6 @@ The following variables are available in the template by default (you can extend
     publicPath: string;
     js: string[];
     css: string[];
-    manifest?: string;
     favicon?: string;
     ```
 
@@ -503,8 +503,7 @@ about which values are passed.
         publicPath: string,
         js: Array<{string}>,
         css: Array<{string}>,
-        favicon?: string | undefined,
-        manifest?: string | undefined
+        favicon?: string | undefined
       },
       outputName: string,
       plugin: HtmlWebpackPlugin
