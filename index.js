@@ -16,8 +16,8 @@ const {
 } = require('./lib/html-tags');
 const prettyError = require('./lib/errors.js');
 const chunkSorter = require('./lib/chunksorter.js');
-const getHtmlWebpackPluginHooks =
-  require('./lib/hooks.js').getHtmlWebpackPluginHooks;
+const getHtmlRspackPluginHooks =
+  require('./lib/hooks.js').getHtmlRspackPluginHooks;
 
 /** @typedef {import("./typings").HtmlTagObject} HtmlTagObject */
 /** @typedef {import("./typings").Options} HtmlWebpackOptions */
@@ -29,7 +29,7 @@ const getHtmlWebpackPluginHooks =
 /** @typedef {Array<{ name: string, source: import('webpack').sources.Source, info?: import('webpack').AssetInfo }>} PreviousEmittedAssets */
 /** @typedef {{ publicPath: string, js: Array<string>, css: Array<string>, favicon?: string }} AssetsInformationByGroups */
 
-class HtmlWebpackPlugin {
+class HtmlRspackPlugin {
   /**
    * @param {HtmlWebpackOptions} [options]
    */
@@ -37,7 +37,7 @@ class HtmlWebpackPlugin {
     /** @type {HtmlWebpackOptions} */
     // TODO remove me in the next major release
     this.userOptions = options || {};
-    this.version = HtmlWebpackPlugin.version;
+    this.version = HtmlRspackPlugin.version;
 
     // Default options
     /** @type {ProcessedHtmlWebpackOptions} */
@@ -76,10 +76,10 @@ class HtmlWebpackPlugin {
    * @returns {void}
    */
   apply(compiler) {
-    this.logger = compiler.getInfrastructureLogger('HtmlWebpackPlugin');
+    this.logger = compiler.getInfrastructureLogger('HtmlRspackPlugin');
 
     // Wait for configuration preset plugions to apply all configure webpack defaults
-    compiler.hooks.initialize.tap('HtmlWebpackPlugin', () => {
+    compiler.hooks.initialize.tap('HtmlRspackPlugin', () => {
       const options = this.options;
 
       options.template = this.getTemplatePath(
@@ -188,7 +188,7 @@ class HtmlWebpackPlugin {
         }
 
         compiler.hooks.thisCompilation.tap(
-          'HtmlWebpackPlugin',
+          'HtmlRspackPlugin',
           /**
            * Hook into the webpack compilation
            * @param {Compilation} compilation
@@ -196,7 +196,7 @@ class HtmlWebpackPlugin {
           (compilation) => {
             compilation.hooks.processAssets.tapAsync(
               {
-                name: 'HtmlWebpackPlugin',
+                name: 'HtmlRspackPlugin',
                 stage:
                   /**
                    * Generate the html after minification and dev tooling is done
@@ -888,7 +888,7 @@ class HtmlWebpackPlugin {
       })
       .catch(() =>
         Promise.reject(
-          new Error('HtmlWebpackPlugin: could not load file ' + filename),
+          new Error('HtmlRspackPlugin: could not load file ' + filename),
         ),
       );
   }
@@ -1191,7 +1191,7 @@ class HtmlWebpackPlugin {
       previousEmittedAssets,
     ).then((faviconPath) => {
       assetsInformationByGroups.favicon = faviconPath;
-      return getHtmlWebpackPluginHooks(
+      return getHtmlRspackPluginHooks(
         compilation,
       ).beforeAssetTagGeneration.promise({
         assets: assetsInformationByGroups,
@@ -1204,7 +1204,7 @@ class HtmlWebpackPlugin {
     const assetTagGroupsPromise = assetsPromise
       // And allow third-party-plugin authors to reorder and change the assetTags before they are grouped
       .then(({ assets }) =>
-        getHtmlWebpackPluginHooks(compilation).alterAssetTags.promise({
+        getHtmlRspackPluginHooks(compilation).alterAssetTags.promise({
           assetTags: {
             scripts: this.generatedScriptTags(assets.js),
             styles: this.generateStyleTags(assets.css),
@@ -1234,7 +1234,7 @@ class HtmlWebpackPlugin {
         // Group assets to `head` and `body` tag arrays
         const assetGroups = this.groupAssetsByElements(assetTags, scriptTarget);
         // Allow third-party-plugin authors to reorder and change the assetTags once they are grouped
-        return getHtmlWebpackPluginHooks(
+        return getHtmlRspackPluginHooks(
           compilation,
         ).alterAssetTagGroups.promise({
           headTags: assetGroups.headTags,
@@ -1313,7 +1313,7 @@ class HtmlWebpackPlugin {
           plugin: this,
           outputName,
         };
-        return getHtmlWebpackPluginHooks(
+        return getHtmlRspackPluginHooks(
           compilation,
         ).afterTemplateExecution.promise(pluginArgs);
       })
@@ -1328,7 +1328,7 @@ class HtmlWebpackPlugin {
       // Allow plugins to change the html after assets are injected
       .then((html) => {
         const pluginArgs = { html, plugin: this, outputName };
-        return getHtmlWebpackPluginHooks(compilation)
+        return getHtmlRspackPluginHooks(compilation)
           .beforeEmit.promise(pluginArgs)
           .then((result) => result.html);
       })
@@ -1365,7 +1365,7 @@ class HtmlWebpackPlugin {
         return replacedFilename.path;
       })
       .then((finalOutputName) =>
-        getHtmlWebpackPluginHooks(compilation)
+        getHtmlRspackPluginHooks(compilation)
           .afterEmit.promise({
             outputName: finalOutputName,
             plugin: this,
@@ -1416,14 +1416,14 @@ function templateParametersGenerator(compilation, assets, assetTags, options) {
 /**
  * The major version number of this plugin
  */
-HtmlWebpackPlugin.version = 5;
+HtmlRspackPlugin.version = 6;
 
 /**
  * A static helper to get the hooks for this plugin
  *
- * Usage: HtmlWebpackPlugin.getHooks(compilation).HOOK_NAME.tapAsync('YourPluginName', () => { ... });
+ * Usage: HtmlRspackPlugin.getHooks(compilation).HOOK_NAME.tapAsync('YourPluginName', () => { ... });
  */
-HtmlWebpackPlugin.getHooks = getHtmlWebpackPluginHooks;
-HtmlWebpackPlugin.createHtmlTagObject = createHtmlTagObject;
+HtmlRspackPlugin.getHooks = getHtmlRspackPluginHooks;
+HtmlRspackPlugin.createHtmlTagObject = createHtmlTagObject;
 
-module.exports = HtmlWebpackPlugin;
+module.exports = HtmlRspackPlugin;

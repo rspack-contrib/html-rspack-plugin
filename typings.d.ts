@@ -1,24 +1,24 @@
 import { AsyncSeriesWaterfallHook } from './compiled/tapable';
 import { Compiler, Compilation } from '@rspack/core';
 
-export = HtmlWebpackPlugin;
+export = HtmlRspackPlugin;
 
-declare class HtmlWebpackPlugin {
-  constructor(options?: HtmlWebpackPlugin.Options);
+declare class HtmlRspackPlugin {
+  constructor(options?: HtmlRspackPlugin.Options);
 
-  userOptions: HtmlWebpackPlugin.Options;
+  userOptions: HtmlRspackPlugin.Options;
 
-  /** Current HtmlWebpackPlugin Major */
+  /** Current HtmlRspackPlugin Major */
   version: number;
 
   /**
    * Options after html-webpack-plugin has been initialized with defaults
    */
-  options?: HtmlWebpackPlugin.ProcessedOptions;
+  options?: HtmlRspackPlugin.ProcessedOptions;
 
   apply(compiler: Compiler): void;
 
-  static getHooks(compilation: Compilation): HtmlWebpackPlugin.Hooks;
+  static getHooks(compilation: Compilation): HtmlRspackPlugin.Hooks;
 
   /**
    * Static helper to create a tag object to be get injected into the dom
@@ -27,12 +27,12 @@ declare class HtmlWebpackPlugin {
     tagName: string,
     attributes?: { [attributeName: string]: string | boolean },
     innerHTML?: string,
-  ): HtmlWebpackPlugin.HtmlTagObject;
+  ): HtmlRspackPlugin.HtmlTagObject;
 
   static readonly version: number;
 }
 
-declare namespace HtmlWebpackPlugin {
+declare namespace HtmlRspackPlugin {
   type MinifyOptions = HtmlMinifierOptions;
 
   interface Options {
@@ -207,7 +207,7 @@ declare namespace HtmlWebpackPlugin {
       };
       publicPath: string;
       outputName: string;
-      plugin: HtmlWebpackPlugin;
+      plugin: HtmlRspackPlugin;
     }>;
 
     alterAssetTagGroups: AsyncSeriesWaterfallHook<{
@@ -215,7 +215,7 @@ declare namespace HtmlWebpackPlugin {
       bodyTags: HtmlTagObject[];
       outputName: string;
       publicPath: string;
-      plugin: HtmlWebpackPlugin;
+      plugin: HtmlRspackPlugin;
     }>;
 
     afterTemplateExecution: AsyncSeriesWaterfallHook<{
@@ -223,7 +223,7 @@ declare namespace HtmlWebpackPlugin {
       headTags: HtmlTagObject[];
       bodyTags: HtmlTagObject[];
       outputName: string;
-      plugin: HtmlWebpackPlugin;
+      plugin: HtmlRspackPlugin;
     }>;
 
     beforeAssetTagGeneration: AsyncSeriesWaterfallHook<{
@@ -234,18 +234,18 @@ declare namespace HtmlWebpackPlugin {
         favicon?: string;
       };
       outputName: string;
-      plugin: HtmlWebpackPlugin;
+      plugin: HtmlRspackPlugin;
     }>;
 
     beforeEmit: AsyncSeriesWaterfallHook<{
       html: string;
       outputName: string;
-      plugin: HtmlWebpackPlugin;
+      plugin: HtmlRspackPlugin;
     }>;
 
     afterEmit: AsyncSeriesWaterfallHook<{
       outputName: string;
-      plugin: HtmlWebpackPlugin;
+      plugin: HtmlRspackPlugin;
     }>;
   }
 
