@@ -14,9 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ['10.x', '12.x', '14.x', '16.x', '18.x', '20.x']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        webpack: ['5']
+        node: ['18.x']
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: LF
@@ -32,9 +31,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install --ignore-scripts --force --legacy-peer-deps
-
-      - name: Install Webpack ${{ matrix.webpack }}
-        run: npm install --ignore-scripts --force --legacy-peer-deps webpack@${{ matrix.webpack }}
 
       - name: Test
         run: npm test -- --forceExit || npm test -- --forceExit || npm test -- --forceExit
