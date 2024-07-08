@@ -65,7 +65,7 @@ This will generate a file `dist/index.html` containing the following
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Webpack App</title>
+    <title>Rspack App</title>
     <script defer src="index_bundle.js"></script>
   </head>
   <body></body>
@@ -84,7 +84,7 @@ You can pass a hash of configuration options to `html-webpack-plugin`. Allowed v
 
 | Name | Type | Default | Description |
 | :-: | :-: | :-: | :-- |
-| **`title`** | `{String}` | `Webpack App` | The title to use for the generated HTML document |
+| **`title`** | `{String}` | `Rspack App` | The title to use for the generated HTML document |
 | **`filename`** | `{String\|Function}` | `'index.html'` | The file to write the HTML to. Defaults to `index.html`. You can specify a subdirectory here too (eg: `assets/admin.html`). The `[name]` placeholder will be replaced with the entry name. Can also be a function e.g. `(entryName) => entryName + '.html'`. |
 | **`template`** | `{String}` | `` | Rspack relative or absolute path to the template. By default it will use `src/index.ejs` if it exists. Please see the [docs](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/docs/template-option.md) for details |
 | **`templateContent`** | `{string\|Function\|false}` | false | Can be used instead of `template` to provide an inline template - please read the [Writing Your Own Templates](https://github.com/rspack-contrib/html-rspack-plugin#writing-your-own-templates) section |

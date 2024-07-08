@@ -62,7 +62,7 @@ class HtmlWebpackPlugin {
       chunksSortMode: 'auto',
       meta: {},
       base: false,
-      title: 'Webpack App',
+      title: 'Rspack App',
       xhtml: false,
     };
 
