@@ -112,7 +112,7 @@ declare namespace HtmlWebpackPlugin {
     /**
      * A function to minify the HTML
      */
-    minimizer?: (html: string) => string
+    minify?: (html: string) => string
     /**
      * Render errors into the HTML page
      */
