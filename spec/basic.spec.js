@@ -1000,22 +1000,6 @@ describe('HtmlWebpackPlugin', () => {
     }, [], /index\.[a-f0-9]{20}\.html/, done);
   });
 
-  it('will replace [templatehash] in the filename with a content hash of 32 hex characters', done => {
-    testHtmlPlugin({
-      mode: 'production',
-      entry: {
-        index: path.join(__dirname, 'fixtures/index.js')
-      },
-      output: {
-        path: OUTPUT_DIR,
-        filename: '[name]_bundle.js'
-      },
-      plugins: [
-        new HtmlWebpackPlugin({ filename: 'index.[templatehash].html' })
-      ]
-    }, [], /index\.[a-f0-9]{20}\.html/, done);
-  });
-
   it('allows you to use an absolute output filename', done => {
     testHtmlPlugin({
       mode: 'production',

@@ -1339,13 +1339,7 @@ class HtmlRspackPlugin {
         return this.options.showErrors ? prettyError(err).toHtml() : 'ERROR';
       })
       .then((html) => {
-        const filename = outputName.replace(
-          /\[templatehash([^\]]*)\]/g,
-          require('util').deprecate(
-            (match, options) => `[contenthash${options}]`,
-            '[templatehash] is now [contenthash]',
-          ),
-        );
+        const filename = outputName;
         const replacedFilename = this.replacePlaceholdersInFilename(
           compiler,
           filename,
