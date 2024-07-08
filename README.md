@@ -16,12 +16,12 @@ The function of this plugin is basically the same as `html-webpack-plugin`.
 
 Differences with `html-webpack-plugin`:
 
-- Import type from `@rspack/core`
-- Inline `@types/html-minifier-terser` package
-- Bump `html-minifier-terser` from v6 to v7
-- Remove `pretty-error` dependency
-- Remove `webpack` peer dependency
-- Prebundle all dependencies
+- Designed for Rspack
+  - Import type from `@rspack/core`
+- Zero dependency
+  - Removed `html-minifier-terser` and allows to use any HTML minimizer
+  - Removed `pretty-error` dependency
+  - Removed `webpack` peer dependency
 - Performance improvements for Rspack:
   - Removed support for HTML5 Application caches (it has been deprecated)
   - Reuse `compilation.entrypoints`
@@ -39,27 +39,20 @@ yarn add -D html-rspack-plugin
 pnpm add -D html-rspack-plugin
 ```
 
-<h2 align="center">Zero Config</h2>
-
-The `html-webpack-plugin` works without configuration.  
-It's a great addition to the [⚙️ webpack-config-plugins](https://github.com/namics/webpack-config-plugins/blob/master/README.md#zero-config-webpack-dev-server-example).
-
 ## Usage
 
-The plugin will generate an HTML5 file for you that includes all your Rspack
-bundles in the head using `script` tags. Just add the plugin to your Rspack
-config as follows:
+The plugin will generate an HTML5 file for you that includes all your Rspack bundles in the head using `script` tags. Just add the plugin to your Rspack config as follows:
 
 **rspack.config.js**
 
 ```js
-const HtmlRspackPlugin = require("html-rspack-plugin");
+const HtmlRspackPlugin = require('html-rspack-plugin');
 
 module.exports = {
-  entry: "index.js",
+  entry: 'index.js',
   output: {
-    path: __dirname + "/dist",
-    filename: "index_bundle.js",
+    path: __dirname + '/dist',
+    filename: 'index_bundle.js',
   },
   plugins: [new HtmlRspackPlugin()],
 };
@@ -68,7 +61,7 @@ module.exports = {
 This will generate a file `dist/index.html` containing the following
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -81,37 +74,35 @@ This will generate a file `dist/index.html` containing the following
 
 If you have multiple Rspack entry points, they will all be included with `script` tags in the generated HTML.
 
-If you have any CSS assets in webpack's output (for example, CSS extracted with the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin))
-then these will be included with `<link>` tags in the HTML head.
+If you have any CSS assets in webpack's output (for example, CSS extracted with the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)) then these will be included with `<link>` tags in the HTML head.
 
 If you have plugins that make use of it, `html-webpack-plugin` should be ordered first before any of the integrated Plugins.
 
-<h2 align="center">Options</h2>
+## Options
 
-You can pass a hash of configuration options to `html-webpack-plugin`.
-Allowed values are as follows:
+You can pass a hash of configuration options to `html-webpack-plugin`. Allowed values are as follows:
 
-|           Name           |                         Type                         |                        Default                        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| :----------------------: | :--------------------------------------------------: | :---------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|       **`title`**        |                      `{String}`                      |                     `Webpack App`                     | The title to use for the generated HTML document                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-|      **`filename`**      |                 `{String\|Function}`                 |                    `'index.html'`                     | The file to write the HTML to. Defaults to `index.html`. You can specify a subdirectory here too (eg: `assets/admin.html`). The `[name]` placeholder will be replaced with the entry name. Can also be a function e.g. `(entryName) => entryName + '.html'`.                                                                                                                                                                                                                                                                               |
-|      **`template`**      |                      `{String}`                      |                          ``                           | Rspack relative or absolute path to the template. By default it will use `src/index.ejs` if it exists. Please see the [docs](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/docs/template-option.md) for details                                                                                                                                                                                                                                                                                                              |
-|  **`templateContent`**   |             `{string\|Function\|false}`              |                         false                         | Can be used instead of `template` to provide an inline template - please read the [Writing Your Own Templates](https://github.com/rspack-contrib/html-rspack-plugin#writing-your-own-templates) section                                                                                                                                                                                                                                                                                                                                         |
-| **`templateParameters`** |            `{Boolean\|Object\|Function}`             |                        `false`                        | Allows to overwrite the parameters used in the template - see [example](https://github.com/rspack-contrib/html-rspack-plugin/tree/master/examples/template-parameters)                                                                                                                                                                                                                                                                                                                                                                          |
-|       **`inject`**       |                 `{Boolean\|String}`                  |                        `true`                         | `true \|\| 'head' \|\| 'body' \|\| false` Inject all assets into the given `template` or `templateContent`. When passing `'body'` all javascript resources will be placed at the bottom of the body element. `'head'` will place the scripts in the head element. Passing `true` will add it to the head/body depending on the `scriptLoading` option. Passing `false` will disable automatic injections. - see the [inject:false example](https://github.com/rspack-contrib/html-rspack-plugin/tree/master/examples/custom-insertion-position) |
-|     **`publicPath`**     |                  `{String\|'auto'}`                  |                       `'auto'`                        | The publicPath used for script and link tags                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|   **`scriptLoading`**    | `{'blocking'\|'defer'\|'module'\|'systemjs-module'}` |                       `'defer'`                       | Modern browsers support non blocking javascript loading (`'defer'`) to improve the page startup performance. Setting to `'module'` adds attribute [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html). This also implies "defer", since modules are automatically deferred.                                                                                                                                                                                          |
-|      **`favicon`**       |                      `{String}`                      |                          ``                           | Adds the given favicon path to the output HTML                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|        **`meta`**        |                      `{Object}`                      |                         `{}`                          | Allows to inject `meta`-tags. E.g. `meta: {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}`                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|        **`base`**        |              `{Object\|String\|false}`               |                        `false`                        | Inject a [`base`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) tag. E.g. `base: "https://example.com/path/page.html`                                                                                                                                                                                                                                                                                                                                                                                                    |
-|       **`minify`**       |                 `{Boolean\|Object}`                  | `true` if `mode` is `'production'`, otherwise `false` | Controls if and in what ways the output should be minified. See [minification](#minification) below for more details.                                                                                                                                                                                                                                                                                                                                                                                                                      |
-|        **`hash`**        |                     `{Boolean}`                      |                        `false`                        | If `true` then append a unique Rspack compilation hash to all included scripts and CSS files (i.e. `main.js?hash=compilation_hash`). This is useful for cache busting                                                                                                                                                                                                                                                                                                                                                                      |
-|       **`cache`**        |                     `{Boolean}`                      |                        `true`                         | Emit the file only if it was changed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|     **`showErrors`**     |                     `{Boolean}`                      |                        `true`                         | Errors details will be written into the HTML page                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-|       **`chunks`**       |                        `{?}`                         |                          `?`                          | Allows you to add only some chunks (e.g only the unit-test chunk)                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-|   **`chunksSortMode`**   |                 `{String\|Function}`                 |                        `auto`                         | Allows to control how chunks should be sorted before they are included to the HTML. Allowed values are `'none' \| 'auto' \| 'manual' \| {Function}`                                                                                                                                                                                                                                                                                                                                                                                        |
-|   **`excludeChunks`**    |                  `{Array.<string>}`                  |                          ``                           | Allows you to skip some chunks (e.g don't add the unit-test chunk)                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|       **`xhtml`**        |                     `{Boolean}`                      |                        `false`                        | If `true` render the `link` tags as self-closing (XHTML compliant)                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Name | Type | Default | Description |
+| :-: | :-: | :-: | :-- |
+| **`title`** | `{String}` | `Webpack App` | The title to use for the generated HTML document |
+| **`filename`** | `{String\|Function}` | `'index.html'` | The file to write the HTML to. Defaults to `index.html`. You can specify a subdirectory here too (eg: `assets/admin.html`). The `[name]` placeholder will be replaced with the entry name. Can also be a function e.g. `(entryName) => entryName + '.html'`. |
+| **`template`** | `{String}` | `` | Rspack relative or absolute path to the template. By default it will use `src/index.ejs` if it exists. Please see the [docs](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/docs/template-option.md) for details |
+| **`templateContent`** | `{string\|Function\|false}` | false | Can be used instead of `template` to provide an inline template - please read the [Writing Your Own Templates](https://github.com/rspack-contrib/html-rspack-plugin#writing-your-own-templates) section |
+| **`templateParameters`** | `{Boolean\|Object\|Function}` | `false` | Allows to overwrite the parameters used in the template - see [example](https://github.com/rspack-contrib/html-rspack-plugin/tree/master/examples/template-parameters) |
+| **`inject`** | `{Boolean\|String}` | `true` | `true \|\| 'head' \|\| 'body' \|\| false` Inject all assets into the given `template` or `templateContent`. When passing `'body'` all javascript resources will be placed at the bottom of the body element. `'head'` will place the scripts in the head element. Passing `true` will add it to the head/body depending on the `scriptLoading` option. Passing `false` will disable automatic injections. - see the [inject:false example](https://github.com/rspack-contrib/html-rspack-plugin/tree/master/examples/custom-insertion-position) |
+| **`publicPath`** | `{String\|'auto'}` | `'auto'` | The publicPath used for script and link tags |
+| **`scriptLoading`** | `{'blocking'\|'defer'\|'module'\|'systemjs-module'}` | `'defer'` | Modern browsers support non blocking javascript loading (`'defer'`) to improve the page startup performance. Setting to `'module'` adds attribute [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html). This also implies "defer", since modules are automatically deferred. |
+| **`favicon`** | `{String}` | `` | Adds the given favicon path to the output HTML |
+| **`meta`** | `{Object}` | `{}` | Allows to inject `meta`-tags. E.g. `meta: {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}` |
+| **`base`** | `{Object\|String\|false}` | `false` | Inject a [`base`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) tag. E.g. `base: "https://example.com/path/page.html` |
+| **`minify`** | `(html: string) => string` | `` | A function to minify HTML, see [minification](#minification) below for more details. |
+| **`hash`** | `{Boolean}` | `false` | If `true` then append a unique Rspack compilation hash to all included scripts and CSS files (i.e. `main.js?hash=compilation_hash`). This is useful for cache busting |
+| **`cache`** | `{Boolean}` | `true` | Emit the file only if it was changed |
+| **`showErrors`** | `{Boolean}` | `true` | Errors details will be written into the HTML page |
+| **`chunks`** | `{?}` | `?` | Allows you to add only some chunks (e.g only the unit-test chunk) |
+| **`chunksSortMode`** | `{String\|Function}` | `auto` | Allows to control how chunks should be sorted before they are included to the HTML. Allowed values are `'none' \| 'auto' \| 'manual' \| {Function}` |
+| **`excludeChunks`** | `{Array.<string>}` | `` | Allows you to skip some chunks (e.g don't add the unit-test chunk) |
+| **`xhtml`** | `{Boolean}` | `false` | If `true` render the `link` tags as self-closing (XHTML compliant) |
 
 Here's an example webpack config illustrating how to use these options
 
@@ -135,8 +126,7 @@ Here's an example webpack config illustrating how to use these options
 
 ### Generating Multiple HTML Files
 
-To generate more than one HTML file, declare the plugin more than
-once in your plugins array
+To generate more than one HTML file, declare the plugin more than once in your plugins array
 
 **rspack.config.js**
 
@@ -159,19 +149,16 @@ once in your plugins array
 
 ### Writing Your Own Templates
 
-If the default generated HTML doesn't meet your needs you can supply
-your own template. The easiest way is to use the `template` option and pass a custom HTML file.
-The html-webpack-plugin will automatically inject all necessary CSS, JS
-and favicon files into the markup.
+If the default generated HTML doesn't meet your needs you can supply your own template. The easiest way is to use the `template` option and pass a custom HTML file. The html-webpack-plugin will automatically inject all necessary CSS, JS and favicon files into the markup.
 
 Details of other template loaders are [documented here](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/docs/template-option.md).
 
 ```js
 plugins: [
   new HtmlRspackPlugin({
-    title: "Custom template",
+    title: 'Custom template',
     // Load a custom template (lodash by default)
-    template: "index.html",
+    template: 'index.html',
   }),
 ];
 ```
@@ -179,7 +166,7 @@ plugins: [
 **index.html**
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -189,8 +176,7 @@ plugins: [
 </html>
 ```
 
-If you already have a template loader, you can use it to parse the template.
-Please note that this will also happen if you specify the html-loader and use `.html` file as template.
+If you already have a template loader, you can use it to parse the template. Please note that this will also happen if you specify the html-loader and use `.html` file as template.
 
 **rspack.config.js**
 
@@ -214,12 +200,9 @@ The following variables are available in the template by default (you can extend
 
 - `HtmlRspackPlugin`: data specific to this plugin
 
-  - `HtmlRspackPlugin.options`: the options hash that was passed to
-    the plugin. In addition to the options actually used by this plugin,
-    you can use this hash to pass arbitrary data through to your template.
+  - `HtmlRspackPlugin.options`: the options hash that was passed to the plugin. In addition to the options actually used by this plugin, you can use this hash to pass arbitrary data through to your template.
 
-  - `HtmlRspackPlugin.tags`: the prepared `headTags` and `bodyTags` Array to render the `<base>`, `<meta>`, `<script>` and `<link>` tags.
-    Can be used directly in templates and literals. For example:
+  - `HtmlRspackPlugin.tags`: the prepared `headTags` and `bodyTags` Array to render the `<base>`, `<meta>`, `<script>` and `<link>` tags. Can be used directly in templates and literals. For example:
 
     ```html
     <html>
@@ -241,13 +224,9 @@ The following variables are available in the template by default (you can extend
     favicon?: string;
     ```
 
-- `webpackConfig`: the webpack configuration that was used for this compilation. This
-  can be used, for example, to get the `publicPath` (`webpackConfig.output.publicPath`).
+- `webpackConfig`: the webpack configuration that was used for this compilation. This can be used, for example, to get the `publicPath` (`webpackConfig.output.publicPath`).
 
-- `compilation`: the webpack [compilation object](https://webpack.js.org/api/compilation-object/).
-  This can be used, for example, to get the contents of processed assets and inline them
-  directly in the page, through `compilation.assets[...].source()`
-  (see [the inline template example](examples/inline/template.pug)).
+- `compilation`: the webpack [compilation object](https://webpack.js.org/api/compilation-object/). This can be used, for example, to get the contents of processed assets and inline them directly in the page, through `compilation.assets[...].source()` (see [the inline template example](examples/inline/template.pug)).
 
 The template can also be directly inlined directly into the options object.  
 ⚠️ **`templateContent` does not allow to use webpack loaders for your template and will not watch for template file changes**
@@ -297,7 +276,7 @@ To include only certain chunks you can limit the chunks being used
 ```js
 plugins: [
   new HtmlRspackPlugin({
-    chunks: ["app"],
+    chunks: ['app'],
   }),
 ];
 ```
@@ -309,33 +288,27 @@ It is also possible to exclude certain chunks by setting the `excludeChunks` opt
 ```js
 plugins: [
   new HtmlRspackPlugin({
-    excludeChunks: ["dev-helper"],
+    excludeChunks: ['dev-helper'],
   }),
 ];
 ```
 
 ### Minification
 
-If the `minify` option is set to `true` (the default when webpack's `mode` is `'production'`),
-the generated HTML will be minified using [html-minifier-terser](https://github.com/DanielRuf/html-minifier-terser)
-and the following options:
+You can use any HTML mimizer to minify the output HTML:
 
 ```js
-{
-  collapseWhitespace: true,
-  keepClosingSlash: true,
-  removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  useShortDoctype: true
-}
+const { minify } = require('html-minifier-terser');
+
+plugins: [
+  new HtmlRspackPlugin({
+    minify: (html) =>
+      minify(html, {
+        // options
+      }),
+  }),
+];
 ```
-
-To use custom [html-minifier options](https://github.com/DanielRuf/html-minifier-terser#options-quick-reference)
-pass an object to `minify` instead. This object will not be merged with the defaults above.
-
-To disable minification during production mode set the `minify` option to `false`.
 
 ### Meta Tags
 
@@ -355,9 +328,9 @@ To add those use a key/value pair:
 plugins: [
   new HtmlRspackPlugin({
     meta: {
-      viewport: "width=device-width, initial-scale=1, shrink-to-fit=no",
+      viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
       // Will generate: <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      "theme-color": "#4285f4",
+      'theme-color': '#4285f4',
       // Will generate: <meta name="theme-color" content="#4285f4">
     },
   }),
@@ -375,15 +348,15 @@ This format is supported using an object notation which allows you to add any at
 plugins: [
   new HtmlRspackPlugin({
     meta: {
-      "Content-Security-Policy": {
-        "http-equiv": "Content-Security-Policy",
-        content: "default-src https:",
+      'Content-Security-Policy': {
+        'http-equiv': 'Content-Security-Policy',
+        content: 'default-src https:',
       },
       // Will generate: <meta http-equiv="Content-Security-Policy" content="default-src https:">
       // Which equals to the following http header: `Content-Security-Policy: default-src https:`
-      "set-cookie": {
-        "http-equiv": "set-cookie",
-        content: "name=value; expires=date; path=url",
+      'set-cookie': {
+        'http-equiv': 'set-cookie',
+        content: 'name=value; expires=date; path=url',
       },
       // Will generate: <meta http-equiv="set-cookie" content="value; expires=date; path=url">
       // Which equals to the following http header: `set-cookie: value; expires=date; path=url`
@@ -394,21 +367,19 @@ plugins: [
 
 ### Base Tag
 
-When the `base` option is used,
-html-webpack-plugin will inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base).
-By default, a base tag will not be injected.
+When the `base` option is used, html-webpack-plugin will inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base). By default, a base tag will not be injected.
 
 The following two are identical and will both insert `<base href="http://example.com/some/page.html">`:
 
 ```js
 new HtmlRspackPlugin({
-  base: "http://example.com/some/page.html",
+  base: 'http://example.com/some/page.html',
 });
 ```
 
 ```js
 new HtmlRspackPlugin({
-  base: { href: "http://example.com/some/page.html" },
+  base: { href: 'http://example.com/some/page.html' },
 });
 ```
 
@@ -417,8 +388,8 @@ The `target` can be specified with the corresponding key:
 ```js
 new HtmlRspackPlugin({
   base: {
-    href: "http://example.com/some/page.html",
-    target: "_blank",
+    href: 'http://example.com/some/page.html',
+    target: '_blank',
   },
 });
 ```
@@ -434,7 +405,7 @@ For long term caching add `contenthash` to the filename.
 ```js
 plugins: [
   new HtmlRspackPlugin({
-    filename: "index.[contenthash].html",
+    filename: 'index.[contenthash].html',
   }),
 ];
 ```
@@ -445,11 +416,9 @@ Refer webpack's [Template Strings](https://webpack.js.org/configuration/output/#
 
 ### Events
 
-To allow other [plugins](https://github.com/webpack/docs/wiki/plugins) to alter the HTML this plugin executes
-[tapable](https://github.com/webpack/tapable/tree/master) hooks.
+To allow other [plugins](https://github.com/webpack/docs/wiki/plugins) to alter the HTML this plugin executes [tapable](https://github.com/webpack/tapable/tree/master) hooks.
 
-The [lib/hooks.js](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/lib/hooks.js) contains all information
-about which values are passed.
+The [lib/hooks.js](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/lib/hooks.js) contains all information about which values are passed.
 
 [![Concept flow uml](https://raw.githubusercontent.com/jantimon/html-webpack-plugin/master/flow.png)](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/flow.puml)
 
@@ -532,25 +501,25 @@ Example implementation: [webpack-subresource-integrity](https://www.npmjs.com/pa
 
 ```js
 // If your plugin is direct dependent to the html webpack plugin:
-const HtmlRspackPlugin = require("html-rspack-plugin");
+const HtmlRspackPlugin = require('html-rspack-plugin');
 // If your plugin is using html-webpack-plugin as an optional dependency
 // you can use https://github.com/tallesl/node-safe-require instead:
-const HtmlRspackPlugin = require("safe-require")("html-webpack-plugin");
+const HtmlRspackPlugin = require('safe-require')('html-webpack-plugin');
 
 class MyPlugin {
   apply(compiler) {
-    compiler.hooks.compilation.tap("MyPlugin", (compilation) => {
-      console.log("The compiler is starting a new compilation...");
+    compiler.hooks.compilation.tap('MyPlugin', (compilation) => {
+      console.log('The compiler is starting a new compilation...');
 
       // Static Plugin interface |compilation |HOOK NAME | register listener
       HtmlRspackPlugin.getHooks(compilation).beforeEmit.tapAsync(
-        "MyPlugin", // <-- Set a meaningful name here for stacktraces
+        'MyPlugin', // <-- Set a meaningful name here for stacktraces
         (data, cb) => {
           // Manipulate the content
-          data.html += "The Magic Footer";
+          data.html += 'The Magic Footer';
           // Tell webpack to move on
           cb(null, data);
-        }
+        },
       );
     });
   }
@@ -562,7 +531,7 @@ module.exports = MyPlugin;
 **rspack.config.js**
 
 ```js
-plugins: [new MyPlugin({ options: "" })];
+plugins: [new MyPlugin({ options: '' })];
 ```
 
 Note that the callback must be passed the HtmlRspackPluginData in order to pass this onto any other plugins listening on the same `beforeEmit` event
