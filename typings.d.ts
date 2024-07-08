@@ -1,4 +1,4 @@
-import { AsyncSeriesWaterfallHook } from './compiled/tapable';
+import { AsyncSeriesWaterfallHook } from '@rspack/lite-tapable';
 import { Compiler, Compilation } from '@rspack/core';
 
 export = HtmlRspackPlugin;
