@@ -55,7 +55,6 @@ class HtmlWebpackPlugin {
       scriptLoading: 'defer',
       compile: true,
       favicon: false,
-      minify: 'auto',
       cache: true,
       showErrors: true,
       chunks: 'all',

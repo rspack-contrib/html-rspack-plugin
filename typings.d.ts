@@ -172,6 +172,7 @@ declare namespace HtmlWebpackPlugin {
    */
   interface ProcessedOptions extends Required<Options> {
     filename: string;
+    minify?: Options['minify'];
   }
 
   /**
