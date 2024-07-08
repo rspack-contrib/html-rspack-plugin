@@ -18,7 +18,7 @@ Differences with `html-webpack-plugin`:
 
 - Designed for Rspack
   - Import type from `@rspack/core`
-- Zero dependency
+- Less dependencies
   - Removed `html-minifier-terser` and allows to use any HTML minimizer
   - Removed `pretty-error` dependency
   - Removed `webpack` peer dependency
