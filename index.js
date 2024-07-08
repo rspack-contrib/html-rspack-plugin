@@ -823,9 +823,7 @@ class HtmlWebpackPlugin {
       return Promise.resolve(html);
     }
 
-    html = this.options.minify(html);
-
-    return Promise.resolve(html);
+    return Promise.resolve(this.options.minify(html));
   }
 
   /**

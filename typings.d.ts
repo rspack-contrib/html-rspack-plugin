@@ -1,5 +1,5 @@
-import { AsyncSeriesWaterfallHook } from "./compiled/tapable";
-import { Compiler, Compilation } from "@rspack/core";
+import { AsyncSeriesWaterfallHook } from './compiled/tapable';
+import { Compiler, Compilation } from '@rspack/core';
 
 export = HtmlWebpackPlugin;
 
@@ -26,7 +26,7 @@ declare class HtmlWebpackPlugin {
   static createHtmlTagObject(
     tagName: string,
     attributes?: { [attributeName: string]: string | boolean },
-    innerHTML?: string
+    innerHTML?: string,
   ): HtmlWebpackPlugin.HtmlTagObject;
 
   static readonly version: number;
@@ -44,16 +44,16 @@ declare namespace HtmlWebpackPlugin {
     /**
      * List all entries which should be injected
      */
-    chunks?: "all" | string[];
+    chunks?: 'all' | string[];
     /**
      * Allows to control how chunks should be sorted before they are included to the html.
      * @default 'auto'
      */
     chunksSortMode?:
-      | "auto"
+      | 'auto'
       // `none` is deprecated and an alias for `auto` now.
-      | "none"
-      | "manual"
+      | 'none'
+      | 'manual'
       | ((entryNameA: string, entryNameB: string) => number);
     /**
      * List all entries which should not be injected
@@ -76,7 +76,7 @@ declare namespace HtmlWebpackPlugin {
      * By default the public path is set to `auto` - that way the html-webpack-plugin will try
      * to set the publicPath according to the current filename and the webpack publicPath setting
      */
-    publicPath?: string | "auto";
+    publicPath?: string | 'auto';
     /**
      * If `true` then append a unique `webpack` compilation hash to all included scripts and CSS files.
      * This is useful for cache busting
@@ -88,8 +88,8 @@ declare namespace HtmlWebpackPlugin {
     inject?:
       | false // Don't inject scripts
       | true // Inject scripts into body
-      | "body" // Inject scripts into body
-      | "head"; // Inject scripts into head
+      | 'body' // Inject scripts into body
+      | 'head'; // Inject scripts into head
     /**
      * Set up script loading
      * blocking will result in <script src="..."></script>
@@ -97,7 +97,7 @@ declare namespace HtmlWebpackPlugin {
      *
      * @default 'defer'
      */
-    scriptLoading?: "blocking" | "defer" | "module" | "systemjs-module";
+    scriptLoading?: 'blocking' | 'defer' | 'module' | 'systemjs-module';
     /**
      * Inject meta tags
      */
@@ -112,7 +112,7 @@ declare namespace HtmlWebpackPlugin {
     /**
      * A function to minify the HTML
      */
-    minify?: (html: string) => string
+    minify?: (html: string) => string | Promise<string>;
     /**
      * Render errors into the HTML page
      */
@@ -149,7 +149,7 @@ declare namespace HtmlWebpackPlugin {
             headTags: HtmlTagObject[];
             bodyTags: HtmlTagObject[];
           },
-          options: ProcessedOptions
+          options: ProcessedOptions,
         ) => { [option: string]: any } | Promise<{ [option: string]: any }>)
       | { [option: string]: any };
     /**
@@ -204,7 +204,7 @@ declare namespace HtmlWebpackPlugin {
         styles: HtmlTagObject[];
         meta: HtmlTagObject[];
       };
-      publicPath: string,
+      publicPath: string;
       outputName: string;
       plugin: HtmlWebpackPlugin;
     }>;
@@ -213,7 +213,7 @@ declare namespace HtmlWebpackPlugin {
       headTags: HtmlTagObject[];
       bodyTags: HtmlTagObject[];
       outputName: string;
-      publicPath: string,
+      publicPath: string;
       plugin: HtmlWebpackPlugin;
     }>;
 
@@ -277,7 +277,7 @@ declare namespace HtmlWebpackPlugin {
      * E.g. `{'plugin': 'html-webpack-plugin'}`
      */
     meta: {
-      plugin?: string,
+      plugin?: string;
       [metaAttributeName: string]: any;
     };
   }
