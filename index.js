@@ -666,48 +666,16 @@ class HtmlWebpackPlugin {
       }
     }
 
-    // TODO avoid this logic and use https://github.com/webpack-contrib/html-minimizer-webpack-plugin under the hood in the next major version
     // Check if webpack is running in production mode
     // @see https://github.com/webpack/webpack/blob/3366421f1784c449f415cda5930a8e445086f688/lib/WebpackOptionsDefaulter.js#L12-L14
     const isProductionLikeMode = compiler.options.mode === 'production' || !compiler.options.mode;
-    const needMinify = this.options.minify === true || typeof this.options.minify === 'object' || (this.options.minify === 'auto' && isProductionLikeMode);
+    const needMinify = this.options.minimizer !== undefined  && isProductionLikeMode;
 
     if (!needMinify) {
       return Promise.resolve(html);
     }
 
-    const minifyOptions = typeof this.options.minify === 'object'
-      ? this.options.minify
-      : {
-        // https://www.npmjs.com/package/html-minifier-terser#options-quick-reference
-        collapseWhitespace: true,
-        keepClosingSlash: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true
-      };
-
-    try {
-      html = require('./compiled/html-minifier-terser/index.js').minify(html, minifyOptions);
-    } catch (e) {
-      const isParseError = String(e.message).indexOf('Parse Error') === 0;
-
-      if (isParseError) {
-        e.message = 'html-webpack-plugin could not minify the generated output.\n' +
-          'In production mode the html minifcation is enabled by default.\n' +
-          'If you are not generating a valid html output please disable it manually.\n' +
-          'You can do so by adding the following setting to your HtmlWebpackPlugin config:\n|\n|' +
-          '    minify: false\n|\n' +
-          'See https://github.com/jantimon/html-webpack-plugin#options for details.\n\n' +
-          'For parser dedicated bugs please create an issue here:\n' +
-          'https://danielruf.github.io/html-minifier-terser/' +
-          '\n' + e.message;
-      }
-
-      return Promise.reject(e);
-    }
+    html = this.options.minimizer(html);
 
     return Promise.resolve(html);
   }

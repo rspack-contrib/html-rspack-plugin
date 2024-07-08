@@ -4,10 +4,6 @@ export default {
   dependencies: [
     'tapable',
     {
-      name: "html-minifier-terser",
-      ignoreDts: true,
-    },
-    {
       name: "lodash",
       ignoreDts: true,
     },
