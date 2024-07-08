@@ -95,7 +95,7 @@ You can pass a hash of configuration options to `html-webpack-plugin`. Allowed v
 | **`favicon`** | `{String}` | `` | Adds the given favicon path to the output HTML |
 | **`meta`** | `{Object}` | `{}` | Allows to inject `meta`-tags. E.g. `meta: {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}` |
 | **`base`** | `{Object\|String\|false}` | `false` | Inject a [`base`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) tag. E.g. `base: "https://example.com/path/page.html` |
-| **`minify`** | `(html: string) => string` | `` | A function to minify HTML, see [minification](#minification) below for more details. |
+| **`minify`** | `(html: string) => string \| Promise<string>` | `` | A function to minify HTML, see [minification](#minification) below for more details. |
 | **`hash`** | `{Boolean}` | `false` | If `true` then append a unique Rspack compilation hash to all included scripts and CSS files (i.e. `main.js?hash=compilation_hash`). This is useful for cache busting |
 | **`cache`** | `{Boolean}` | `true` | Emit the file only if it was changed |
 | **`showErrors`** | `{Boolean}` | `true` | Errors details will be written into the HTML page |
