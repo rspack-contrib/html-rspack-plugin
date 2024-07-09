@@ -20,6 +20,7 @@ Differences with `html-webpack-plugin`:
   - Import type from `@rspack/core`
 - Less dependencies
   - Removed `html-minifier-terser` and allows to use any HTML minimizer
+  - Removed `lodash` dependency with a forked minimal version
   - Removed `pretty-error` dependency
   - Removed `webpack` peer dependency
 - Performance improvements for Rspack:
