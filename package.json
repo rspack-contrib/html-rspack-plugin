@@ -1,15 +1,13 @@
 {
   "name": "html-rspack-plugin",
-  "version": "6.0.0-beta.5",
+  "version": "6.0.0-beta.7",
   "license": "MIT",
   "description": "Simplifies creation of HTML files to serve your Rspack bundles",
   "author": "Jan Nicklas <j.nicklas@me.com> (https://github.com/jantimon)",
-  "main": "index.js",
+  "main": "lib/index.js",
   "types": "typings.d.ts",
   "files": [
     "lib/",
-    "index.js",
-    "default_index.ejs",
     "typings.d.ts"
   ],
   "scripts": {
@@ -62,7 +60,7 @@
   "homepage": "https://github.com/rspack-contrib/html-rspack-plugin",
   "repository": "https://github.com/rspack-contrib/html-rspack-plugin.git",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=18.0.0"
   },
   "jest": {
     "watchPathIgnorePatterns": [
@@ -73,5 +71,9 @@
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/html-webpack-plugin"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
