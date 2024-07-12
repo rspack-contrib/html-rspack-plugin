@@ -75,13 +75,13 @@ This will generate a file `dist/index.html` containing the following
 
 If you have multiple Rspack entry points, they will all be included with `script` tags in the generated HTML.
 
-If you have any CSS assets in webpack's output (for example, CSS extracted with the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)) then these will be included with `<link>` tags in the HTML head.
+If you have any CSS assets in Rspack's output (for example, CSS extracted with the [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin)) then these will be included with `<link>` tags in the HTML head.
 
-If you have plugins that make use of it, `html-webpack-plugin` should be ordered first before any of the integrated Plugins.
+If you have plugins that make use of it, `html-rspack-plugin` should be ordered first before any of the integrated Plugins.
 
 ## Options
 
-You can pass a hash of configuration options to `html-webpack-plugin`. Allowed values are as follows:
+You can pass a hash of configuration options to `html-rspack-plugin`. Allowed values are as follows:
 
 | Name | Type | Default | Description |
 | :-: | :-: | :-: | :-- |
@@ -105,7 +105,7 @@ You can pass a hash of configuration options to `html-webpack-plugin`. Allowed v
 | **`excludeChunks`** | `{Array.<string>}` | `` | Allows you to skip some chunks (e.g don't add the unit-test chunk) |
 | **`xhtml`** | `{Boolean}` | `false` | If `true` render the `link` tags as self-closing (XHTML compliant) |
 
-Here's an example webpack config illustrating how to use these options
+Here's an example Rspack config illustrating how to use these options
 
 **rspack.config.js**
 
@@ -150,7 +150,7 @@ To generate more than one HTML file, declare the plugin more than once in your p
 
 ### Writing Your Own Templates
 
-If the default generated HTML doesn't meet your needs you can supply your own template. The easiest way is to use the `template` option and pass a custom HTML file. The html-webpack-plugin will automatically inject all necessary CSS, JS and favicon files into the markup.
+If the default generated HTML doesn't meet your needs you can supply your own template. The easiest way is to use the `template` option and pass a custom HTML file. The html-rspack-plugin will automatically inject all necessary CSS, JS and favicon files into the markup.
 
 Details of other template loaders are [documented here](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/docs/template-option.md).
 
@@ -195,7 +195,7 @@ plugins: [
 ]
 ```
 
-You can use the `lodash` syntax out of the box. If the `inject` feature doesn't fit your needs and you want full control over the asset placement use the [default template](https://github.com/jaketrent/html-webpack-template/blob/86f285d5c790a6c15263f5cc50fd666d51f974fd/index.html) of the [html-webpack-template project](https://github.com/jaketrent/html-webpack-template) as a starting point for writing your own.
+You can use the `lodash.template` syntax out of the box. If the `inject` feature doesn't fit your needs and you want full control over the asset placement, you can write your own template.
 
 The following variables are available in the template by default (you can extend them using the `templateParameters` option):
 
@@ -225,12 +225,12 @@ The following variables are available in the template by default (you can extend
     favicon?: string;
     ```
 
-- `webpackConfig`: the webpack configuration that was used for this compilation. This can be used, for example, to get the `publicPath` (`webpackConfig.output.publicPath`).
+- `webpackConfig`: the Rspack configuration that was used for this compilation. This can be used, for example, to get the `publicPath` (`webpackConfig.output.publicPath`).
 
-- `compilation`: the webpack [compilation object](https://webpack.js.org/api/compilation-object/). This can be used, for example, to get the contents of processed assets and inline them directly in the page, through `compilation.assets[...].source()` (see [the inline template example](examples/inline/template.pug)).
+- `compilation`: the Rspack [compilation object](https://www.rspack.dev/api/plugin-api/compilation-hooks). This can be used, for example, to get the contents of processed assets and inline them directly in the page, through `compilation.assets[...].source()` (see [the inline template example](examples/inline/template.pug)).
 
 The template can also be directly inlined directly into the options object.  
-⚠️ **`templateContent` does not allow to use webpack loaders for your template and will not watch for template file changes**
+⚠️ **`templateContent` does not allow to use Rspack loaders for your template and will not watch for template file changes**
 
 **rspack.config.js**
 
@@ -247,7 +247,7 @@ new HtmlRspackPlugin({
 ```
 
 The `templateContent` can also access all `templateParameters` values.  
-⚠️ **`templateContent` does not allow to use webpack loaders for your template and will not watch for template file changes**
+⚠️ **`templateContent` does not allow to use Rspack loaders for your template and will not watch for template file changes**
 
 **rspack.config.js**
 
@@ -313,8 +313,8 @@ plugins: [
 
 ### Meta Tags
 
-If the `meta` option is set the html-webpack-plugin will inject meta tags.  
-For the default template the html-webpack-plugin will already provide a default for the `viewport` meta tag.
+If the `meta` option is set the html-rspack-plugin will inject meta tags.  
+For the default template the html-rspack-plugin will already provide a default for the `viewport` meta tag.
 
 Please take a look at this well maintained list of almost all [possible meta tags](https://github.com/joshbuchea/HEAD#meta).
 
@@ -368,7 +368,7 @@ plugins: [
 
 ### Base Tag
 
-When the `base` option is used, html-webpack-plugin will inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base). By default, a base tag will not be injected.
+When the `base` option is used, html-rspack-plugin will inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base). By default, a base tag will not be injected.
 
 The following two are identical and will both insert `<base href="http://example.com/some/page.html">`:
 
@@ -413,15 +413,15 @@ plugins: [
 
 `contenthash` is the hash of the content of the output file.
 
-Refer webpack's [Template Strings](https://webpack.js.org/configuration/output/#template-strings) for more details
+Refer Rspack's [Template Strings](https://www.rspack.dev/config/output#template-string) for more details
 
 ### Events
 
-To allow other [plugins](https://github.com/webpack/docs/wiki/plugins) to alter the HTML this plugin executes [tapable](https://github.com/webpack/tapable/tree/master) hooks.
+To allow other plugin to alter the HTML this plugin executes tapable hooks.
 
 The [lib/hooks.js](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/lib/hooks.js) contains all information about which values are passed.
 
-[![Concept flow uml](https://raw.githubusercontent.com/jantimon/html-webpack-plugin/master/flow.png)](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/flow.puml)
+[![Concept flow uml](https://raw.githubusercontent.com/rspack-contrib/html-rspack-plugin/master/flow.png)](https://github.com/rspack-contrib/html-rspack-plugin/blob/master/flow.puml)
 
 #### `beforeAssetTagGeneration` hook
 
@@ -501,11 +501,7 @@ Example implementation: [webpack-subresource-integrity](https://www.npmjs.com/pa
 **plugin.js**
 
 ```js
-// If your plugin is direct dependent to the html webpack plugin:
 const HtmlRspackPlugin = require('html-rspack-plugin');
-// If your plugin is using html-webpack-plugin as an optional dependency
-// you can use https://github.com/tallesl/node-safe-require instead:
-const HtmlRspackPlugin = require('safe-require')('html-webpack-plugin');
 
 class MyPlugin {
   apply(compiler) {
@@ -518,7 +514,7 @@ class MyPlugin {
         (data, cb) => {
           // Manipulate the content
           data.html += 'The Magic Footer';
-          // Tell webpack to move on
+          // Tell Rspack to move on
           cb(null, data);
         },
       );
