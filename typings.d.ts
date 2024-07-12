@@ -171,7 +171,6 @@ declare namespace HtmlRspackPlugin {
    * The plugin options after adding default values
    */
   interface ProcessedOptions extends Required<Options> {
-    filename: string;
     minify?: Options['minify'];
   }
 
