@@ -21,7 +21,7 @@
   },
   "packageManager": "pnpm@9.5.0",
   "dependencies": {
-    "@rspack/lite-tapable": "^1.0.0-alpha.2"
+    "@rspack/lite-tapable": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
