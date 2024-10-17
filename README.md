@@ -509,7 +509,7 @@ class MyPlugin {
       console.log('The compiler is starting a new compilation...');
 
       // Static Plugin interface |compilation |HOOK NAME | register listener
-      HtmlRspackPlugin.getHooks(compilation).beforeEmit.tapAsync(
+      HtmlRspackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync(
         'MyPlugin', // <-- Set a meaningful name here for stacktraces
         (data, cb) => {
           // Manipulate the content
