@@ -18,7 +18,12 @@ declare class HtmlRspackPlugin {
 
   apply(compiler: Compiler): void;
 
+  /**
+   * @deprecated use `getCompilationHooks` instead
+   */
   static getHooks(compilation: Compilation): HtmlRspackPlugin.Hooks;
+
+  static getCompilationHooks(compilation: Compilation): HtmlRspackPlugin.Hooks;
 
   /**
    * Static helper to create a tag object to be get injected into the dom

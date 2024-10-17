@@ -1135,7 +1135,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             expect(Object.keys(object.assetTags)).toEqual(['scripts', 'styles', 'meta']);
             eventFired = true;
             callback();
@@ -1169,7 +1169,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
             pluginArgs.assetTags.scripts = pluginArgs.assetTags.scripts.map(tag => {
               if (tag.tagName === 'script') {
                 tag.attributes.specialAttribute = true;
@@ -1203,7 +1203,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
             pluginArgs.assetTags.scripts = pluginArgs.assetTags.scripts.map(tag => {
               if (tag.tagName === 'script') {
                 tag.attributes.async = false;
@@ -1237,7 +1237,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
             pluginArgs.assetTags.scripts = pluginArgs.assetTags.scripts.map(tag => {
               if (tag.tagName === 'script') {
                 tag.attributes.async = null;
@@ -1271,7 +1271,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).alterAssetTags.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
             pluginArgs.assetTags.scripts = pluginArgs.assetTags.scripts.map(tag => {
               if (tag.tagName === 'script') {
                 tag.attributes.async = undefined;
@@ -1306,7 +1306,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).afterEmit.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).afterEmit.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
             eventArgs = pluginArgs;
             callback(null, pluginArgs);
           });
@@ -1341,7 +1341,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).afterEmit.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).afterEmit.tapAsync('HtmlWebpackPluginTest', (pluginArgs, callback) => {
             eventArgs = pluginArgs;
             callback(null, pluginArgs);
           });
@@ -1374,7 +1374,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).afterTemplateExecution.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFired = true;
             callback();
           });
@@ -1408,7 +1408,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFired = true;
             callback();
           });
@@ -1441,7 +1441,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).afterEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).afterEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFired = true;
             callback();
           });
@@ -1472,7 +1472,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFired = true;
             object.html += 'Injected by plugin';
             callback();
@@ -1507,7 +1507,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          hookNames = Object.keys(HtmlWebpackPlugin.getHooks(compilation)).sort();
+          hookNames = Object.keys(HtmlWebpackPlugin.getCompilationHooks(compilation)).sort();
         });
       }
     };
@@ -1545,7 +1545,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFiredForFirstPlugin = true;
             object.html += 'Injected by first plugin';
             callback(null, object);
@@ -1556,7 +1556,7 @@ describe('HtmlWebpackPlugin', () => {
     const secondExamplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFiredForSecondPlugin = true;
             object.html += ' Injected by second plugin';
             callback(null);
@@ -1594,7 +1594,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFiredForFirstPlugin = true;
             const result = _.extend(object, {
               html: object.html + 'Injected by first plugin'
@@ -1607,7 +1607,7 @@ describe('HtmlWebpackPlugin', () => {
     const secondExamplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFiredForSecondPlugin = true;
             object.html += ' Injected by second plugin';
             callback(null);
@@ -1645,7 +1645,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFiredForFirstPlugin = true;
             const result = _.extend(object, {
               html: object.html + 'Injected by first plugin'
@@ -1658,7 +1658,7 @@ describe('HtmlWebpackPlugin', () => {
     const secondExamplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeEmit.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFiredForSecondPlugin = true;
             const result = _.extend(object, {
               html: object.html + ' Injected by second plugin'
@@ -1695,7 +1695,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).afterTemplateExecution.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFired = true;
             object.bodyTags.push(HtmlWebpackPlugin.createHtmlTagObject('script', { src: 'funky-script.js' }));
             object.html += 'Injected by plugin';
@@ -1731,7 +1731,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeAssetTagGeneration.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeAssetTagGeneration.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFired = true;
             object.assets.js.push('funky-script.js');
             callback();
@@ -1766,7 +1766,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          HtmlWebpackPlugin.getHooks(compilation).beforeAssetTagGeneration.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
+          HtmlWebpackPlugin.getCompilationHooks(compilation).beforeAssetTagGeneration.tapAsync('HtmlWebpackPluginTest', (object, callback) => {
             eventFired = true;
             object.assets.js.push('funky-script.js');
             callback();
@@ -1807,7 +1807,7 @@ describe('HtmlWebpackPlugin', () => {
     const examplePlugin = {
       apply: function (compiler) {
         compiler.hooks.compilation.tap('HtmlWebpackPlugin', compilation => {
-          const hooks = HtmlWebpackPlugin.getHooks(compilation);
+          const hooks = HtmlWebpackPlugin.getCompilationHooks(compilation);
           hookLength = hooks.length;
           // Hook into all hooks
           Object.keys(hooks).forEach((hookName) => {
