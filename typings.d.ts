@@ -38,8 +38,6 @@ declare class HtmlRspackPlugin {
 }
 
 declare namespace HtmlRspackPlugin {
-  type MinifyOptions = HtmlMinifierOptions;
-
   interface Options {
     /**
      * Emit the file only if it was changed.
