@@ -173,9 +173,7 @@ declare namespace HtmlRspackPlugin {
   /**
    * The plugin options after adding default values
    */
-  interface ProcessedOptions extends Required<Options> {
-    minify?: Options['minify'];
-  }
+  interface ProcessedOptions extends Required<Options> {}
 
   /**
    * The values which are available during template execution
