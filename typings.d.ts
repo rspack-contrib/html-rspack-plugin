@@ -6,8 +6,6 @@ export = HtmlRspackPlugin;
 declare class HtmlRspackPlugin {
   constructor(options?: HtmlRspackPlugin.Options);
 
-  userOptions: HtmlRspackPlugin.Options;
-
   /** Current HtmlRspackPlugin Major */
   version: number;
 
@@ -198,55 +196,62 @@ declare namespace HtmlRspackPlugin {
     webpackConfig: any;
   }
 
+  interface AlterAssetTagsData {
+    assetTags: {
+      scripts: HtmlTagObject[];
+      styles: HtmlTagObject[];
+      meta: HtmlTagObject[];
+    };
+    publicPath: string;
+    outputName: string;
+    plugin: HtmlRspackPlugin;
+  }
+
+  interface AlterAssetTagGroupsData {
+    headTags: HtmlTagObject[];
+    bodyTags: HtmlTagObject[];
+    outputName: string;
+    publicPath: string;
+    plugin: HtmlRspackPlugin;
+  }
+
+  interface AfterTemplateExecutionData {
+    html: string;
+    headTags: HtmlTagObject[];
+    bodyTags: HtmlTagObject[];
+    outputName: string;
+    plugin: HtmlRspackPlugin;
+  }
+
+  interface BeforeAssetTagGenerationData {
+    assets: {
+      publicPath: string;
+      js: Array<string>;
+      css: Array<string>;
+      favicon?: string;
+    };
+    outputName: string;
+    plugin: HtmlRspackPlugin;
+  }
+
+  interface BeforeEmitData {
+    html: string;
+    outputName: string;
+    plugin: HtmlRspackPlugin;
+  }
+
+  interface AfterEmitData {
+    outputName: string;
+    plugin: HtmlRspackPlugin;
+  }
+
   interface Hooks {
-    alterAssetTags: AsyncSeriesWaterfallHook<{
-      assetTags: {
-        scripts: HtmlTagObject[];
-        styles: HtmlTagObject[];
-        meta: HtmlTagObject[];
-      };
-      publicPath: string;
-      outputName: string;
-      plugin: HtmlRspackPlugin;
-    }>;
-
-    alterAssetTagGroups: AsyncSeriesWaterfallHook<{
-      headTags: HtmlTagObject[];
-      bodyTags: HtmlTagObject[];
-      outputName: string;
-      publicPath: string;
-      plugin: HtmlRspackPlugin;
-    }>;
-
-    afterTemplateExecution: AsyncSeriesWaterfallHook<{
-      html: string;
-      headTags: HtmlTagObject[];
-      bodyTags: HtmlTagObject[];
-      outputName: string;
-      plugin: HtmlRspackPlugin;
-    }>;
-
-    beforeAssetTagGeneration: AsyncSeriesWaterfallHook<{
-      assets: {
-        publicPath: string;
-        js: Array<string>;
-        css: Array<string>;
-        favicon?: string;
-      };
-      outputName: string;
-      plugin: HtmlRspackPlugin;
-    }>;
-
-    beforeEmit: AsyncSeriesWaterfallHook<{
-      html: string;
-      outputName: string;
-      plugin: HtmlRspackPlugin;
-    }>;
-
-    afterEmit: AsyncSeriesWaterfallHook<{
-      outputName: string;
-      plugin: HtmlRspackPlugin;
-    }>;
+    alterAssetTags: AsyncSeriesWaterfallHook<AlterAssetTagsData>;
+    alterAssetTagGroups: AsyncSeriesWaterfallHook<AlterAssetTagGroupsData>;
+    afterTemplateExecution: AsyncSeriesWaterfallHook<AfterTemplateExecutionData>;
+    beforeAssetTagGeneration: AsyncSeriesWaterfallHook<BeforeAssetTagGenerationData>;
+    beforeEmit: AsyncSeriesWaterfallHook<BeforeEmitData>;
+    afterEmit: AsyncSeriesWaterfallHook<AfterEmitData>;
   }
 
   /**
