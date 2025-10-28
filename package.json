@@ -60,7 +60,7 @@
   "homepage": "https://github.com/rspack-contrib/html-rspack-plugin",
   "repository": "https://github.com/rspack-contrib/html-rspack-plugin.git",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.21.0"
   },
   "jest": {
     "watchPathIgnorePatterns": [
