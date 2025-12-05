@@ -19,8 +19,8 @@ importers:
         specifier: ^20.17.5
         version: 20.17.5
       css-loader:
-        specifier: 5.2.7
-        version: 5.2.7(webpack@5.96.1)
+        specifier: 7.1.2
+        version: 7.1.2(@rspack/core@0.7.5)(webpack@5.96.1)
       dir-compare:
         specifier: ^3.3.0
         version: 3.3.0
@@ -892,11 +892,17 @@ packages:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
 
-  css-loader@5.2.7:
-    resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
-    engines: {node: '>= 10.13.0'}
+  css-loader@7.1.2:
+    resolution: {integrity: sha512-6WvYYn7l/XEGN8Xu2vWFt9nVzrCn39vKyTEFf/ExEyoksJjjSZV/0/35XPlMbpnr6VGhZIUg5yJrL8tGfes/FA==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
-      webpack: ^4.27.0 || ^5.0.0
+      '@rspack/core': 0.x || 1.x
+      webpack: ^5.27.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      webpack:
+        optional: true
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -3599,18 +3605,18 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  css-loader@5.2.7(webpack@5.96.1):
+  css-loader@7.1.2(@rspack/core@0.7.5)(webpack@5.96.1):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.39)
-      loader-utils: 2.0.4
       postcss: 8.4.39
       postcss-modules-extract-imports: 3.1.0(postcss@8.4.39)
       postcss-modules-local-by-default: 4.0.5(postcss@8.4.39)
       postcss-modules-scope: 3.2.0(postcss@8.4.39)
       postcss-modules-values: 4.0.0(postcss@8.4.39)
       postcss-value-parser: 4.2.0
-      schema-utils: 3.3.0
       semver: 7.6.2
+    optionalDependencies:
+      '@rspack/core': 0.7.5
       webpack: 5.96.1(webpack-cli@6.0.1)
 
   cssesc@3.0.0: {}
