@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build-examples": "node examples/build-examples.mjs",
-    "bump": "pnpx bumpp",
+    "bump": "pnpm version -m \"release: v%s\"",
     "check": "rs check",
     "commit": "git-cz",
     "format": "rs fmt",
